@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Main from "./pages/Main";
+import { Box } from "@chakra-ui/react";
+import Header from "./components/Header";
+import PublicProfilePage from "./pages/public/PublicProfilePage";
+import Callback from "./pages/Callback";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box w={'100%'} h={'100%'} bgColor={'#101010'}>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/callback" element={<Callback />} />
+          <Route path="/public/:nickname" element={<PublicProfilePage />} />
+        </Routes>
+      </BrowserRouter>
+    </Box>
   );
 }
 
