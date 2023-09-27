@@ -4,6 +4,8 @@ import { Box } from "@chakra-ui/react";
 import Header from "./components/Header";
 import PublicProfilePage from "./pages/public/PublicProfilePage";
 import Callback from "./pages/Callback";
+import PrivateProfilePage from "./pages/private/PrivateProfilePage";
+import SubMissionPage from "./pages/public/SubMissionPage";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/callback" element={<Callback />} />
           <Route path="/public/:nickname" element={<PublicProfilePage />} />
+          <Route path="/private/*" element={<PrivateProfilePage />} />
+          <Route path="/mission" element={<SubMissionPage />} />
         </Routes>
       </BrowserRouter>
     </Box>

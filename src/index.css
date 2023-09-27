@@ -53,3 +53,8 @@ html, body {
 .nav_deactive {
     color: gray
 }
+
+.search_active {
+    background-color: #4d8df5;
+    color: 'white';
+}

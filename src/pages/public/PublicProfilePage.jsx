@@ -1,5 +1,5 @@
 
-import { Avatar, Box, Center, Container, HStack, Heading, VStack, Text, Badge } from "@chakra-ui/react"
+import { Avatar, Box, Center, Container, HStack, Heading, VStack, Text, Badge, Button } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { API_SERVER } from "../../application"
@@ -56,30 +56,33 @@ export default function PublicProfilePage () {
                             </Box>
                         </VStack>
                     </Box>
-                    <Box w={'400px'} bgColor={'#202020'} borderRadius={10} p={'24px 24px 24px 24px'}>
-                        <Box borderBottom={'1px solid #606060'} pb={2} w={'100%'}>
-                            <Text fontSize={'18px'} fontWeight={'bold'}>반응({data.reactions.length})</Text>
+                    <VStack w={'400px'} spacing={3}>
+                        <Button w={'100%'} fontSize={'14px'} bgColor={'#202020'} color={'white'}>같이해요</Button>
+                        <Box w={'100%'} bgColor={'#202020'} borderRadius={10} p={'24px 24px 24px 24px'}>
+                            <Box borderBottom={'1px solid #606060'} pb={2} w={'100%'}>
+                                <Text fontSize={'17px'} fontWeight={'bold'}>반응({data.reactions.length})</Text>
+                            </Box>
+                            <VStack w={'100%'} pt={4} spacing={2} zIndex={1}>
+                                {data.reactions && data.reactions.map(r =>  
+                                <Box 
+                                    onClick={() => navigate('/public/' + r.user.nickname)}
+                                    borderRadius={10} bgColor={'#303030'} w={'100%'} p={'8px 14px 8px 14px'} zIndex={1} cursor={'pointer'} 
+                                    _hover={{
+                                        bgColor: '#4d8df5',
+                                        transition: '0.4s'
+                                    }}>
+                                    <HStack w={'100%'} justifyContent={'center'} spacing={3}>
+                                        <Avatar h={'45px'} w={'45px'} src={r.user.avatar_url} />
+                                        <VStack w={'100%'} alignItems={'flex-start'} justifyContent={'center'} spacing={1}>
+                                            <Text letterSpacing={'-1px'}>{r.user.nickname}</Text>
+                                            {r.type && <Badge colorScheme="blue">대단해요</Badge>}
+                                            {!r.type && <Badge colorScheme="red">별로에요</Badge>}
+                                        </VStack>
+                                    </HStack>
+                                </Box>)}
+                            </VStack>
                         </Box>
-                        <VStack w={'100%'} pt={4} spacing={2} zIndex={1}>
-                            {data.reactions && data.reactions.map(r =>  
-                            <Box 
-                                onClick={() => navigate('/public/' + r.user.nickname)}
-                                borderRadius={10} bgColor={'#303030'} w={'100%'} p={'8px 14px 8px 14px'} zIndex={1} cursor={'pointer'} 
-                                _hover={{
-                                    bgColor: '#4d8df5',
-                                    transition: '0.4s'
-                                }}>
-                                <HStack w={'100%'} justifyContent={'center'} spacing={3}>
-                                    <Avatar h={'45px'} w={'45px'} src={r.user.avatar_url} />
-                                    <VStack w={'100%'} alignItems={'flex-start'} spacing={1}>
-                                        <Text>{r.user.nickname}</Text>
-                                        {r.type && <Badge colorScheme="blue">대단해요</Badge>}
-                                        {!r.type && <Badge colorScheme="red">별로에요</Badge>}
-                                    </VStack>
-                                </HStack>
-                            </Box>)}
-                        </VStack>
-                    </Box>
+                    </VStack>
                 </HStack>
             </Container>
             </>}

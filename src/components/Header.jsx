@@ -90,14 +90,14 @@ export default function Header () {
                     <Text fontSize={'2xl'} fontWeight={'bold'} cursor={'pointer'}>구해YO</Text>
                 </Box>
                 <HStack letterSpacing={'-1px'} fontSize={'15px'} fontWeight={'600'} pl={'90px'}>
-                    <Box p={'15px 20px 15px 20px'} cursor={'pointer'} onClick={() => navClick(0, '/', true)}>
+                    <Box p={'15px 20px 15px 20px'} cursor={'pointer'} onClick={() => navClick(0, '/private', true)}>
                         <Text className={ clicked === 0 ? 'nav_active' : 'nav_deactive'}>프로필</Text>
                     </Box>
                     <Box p={'15px 20px 15px 20px'} cursor={'pointer'} onClick={() => navClick(1, '/', false)}>
                         <Text className={ clicked === 1 ? 'nav_active' : 'nav_deactive'}>네트워크</Text>
                     </Box>
-                    <Box p={'15px 20px 15px 20px'} cursor={'pointer'} onClick={() => navClick(2, '/a', false)}>
-                        <Text className={ clicked === 2 ? 'nav_active' : 'nav_deactive'}>팀원모집</Text>
+                    <Box p={'15px 20px 15px 20px'} cursor={'pointer'} onClick={() => navClick(2, '/mission', true)}>
+                        <Text className={ clicked === 2 ? 'nav_active' : 'nav_deactive'}>문의하기</Text>
                     </Box>
                 </HStack>
                 <Box h={'40px'} borderRadius={10}>
