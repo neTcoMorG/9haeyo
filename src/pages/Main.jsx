@@ -18,7 +18,7 @@ import {
     Avatar,
     Tooltip,
     Textarea,
-    Editable,
+    useToast,
 } from "@chakra-ui/react"
 import ProfileCard from "../components/ProfileCard"
 import { useEffect, useState } from "react"
@@ -29,6 +29,7 @@ import github from '../resource/github.png'
 
 export default function Main () {
 
+    const toast = useToast()
     const loginModal   = useDisclosure()
     const reqModal = useDisclosure()
 
@@ -49,12 +50,34 @@ export default function Main () {
         setSearch(type)
     }
 
+    const changeRequestMessage = (e) => {
+        setReq({
+            nickname: reqUser.nickname,
+            message: e.target.value
+        })
+    }
+
+    const requestPacket = () => {
+        axios.post(API_SERVER + '/req', JSON.stringify(req), {headers: {
+            Authorization: localStorage.getItem('9token'),
+            'Content-Type': 'application/json'
+        }})
+        .then(() => {
+            reqModal.onClose()
+            toast({
+                title: '성공적으로 보냈어요!',
+                status: 'info'
+            })
+        })
+    }
+
     const sendRequest = (nickname, avatar_url) => {
         const token = localStorage.getItem('9token')
         if (token == null) {
             loginModal.onOpen()
             return
         }
+        setReq({nickname: '', message: ''})
         setReqUser({
             nickname,
             avatar_url,
@@ -88,23 +111,23 @@ export default function Main () {
             <ModalOverlay 
                 backdropFilter={'auto'}
                 backdropSaturate={'80%'}
-                backdropBlur={'2px'}
+                backdropBlur={'5px'}
             />
             <ModalContent bgColor={'#101010'}>
                 <ModalCloseButton  />
                 <ModalBody p={'32px'}>
                     <Center w={'100%'}>
                         {reqUser && <>
-                            <VStack spacing={5} w={'100%'}>
+                            <VStack spacing={4} w={'100%'}>
                                 <Avatar h={'120px'} w={'120px'}  src={reqUser.avatar_url} />
                                 <HStack letterSpacing={'-1px'} fontSize={'18px'} spacing={2}>
                                     <Text fontWeight={'bold'}>{reqUser.nickname}</Text>
                                     <Text>님 같이해요</Text>
                                 </HStack>
-                                <Textarea h={'280px'} placeholder="무엇을 함께 하고 싶으신가요?" />
-                            
-                                <Button bgColor={'#4d8df5'} color={'white'} w={'100%'}>보내기</Button>
-                            </VStack></>}
+                                <Textarea borderColor={'#303030'} h={'280px'} placeholder="무엇을 함께 하고 싶으신가요?" value={req.message} onChange={changeRequestMessage} />
+                                <Button bgColor={'#4d8df5'} color={'white'} w={'100%'} onClick={requestPacket}>보내기</Button>
+                            </VStack>
+                        </>}
                     </Center>
                 </ModalBody>
             </ModalContent>
@@ -118,8 +141,8 @@ export default function Main () {
             <ModalContent bgColor={'#101010'}>
                 <ModalCloseButton  />
                 <ModalBody p={'16px 0 16px 0'}>
-                    <Center w={'100%'} h={'100%'} >
-                        <Button h={'100%'} bgColor={'#101010'} color={'white'} fontSize={'18px'} p={2} onClick={() => window.location.href = GITHUB_LOGIN_URL}>
+                    <Center w={'100%'} h={'100%'} p={'0 60px 0 60px'} >
+                        <Button h={'100%'} w={'100%'} bgColor={'#101010'} color={'white'} fontSize={'18px'} p={2} onClick={() => window.location.href = GITHUB_LOGIN_URL}>
                             <HStack alignItems={'center'}>
                                 <Avatar src={github} size={'sm'} />
                                 <Text>Github로 시작하기</Text>
@@ -165,12 +188,20 @@ export default function Main () {
                             <Text fontSize={'15px'} fontWeight={'bold'} pb={2} letterSpacing={'-1px'}>분야 선택</Text>
                         </Box>
                         <HStack wrap={'wrap'} h={'100%'} pt={3}>
-                            <Box onClick={() => onSearch('전체')} cursor={'pointer'} p={'6px 12px 6px 12px'} bgColor={'#202020'} borderRadius={10} className={search === '전체' ? 'search_active' : ''}>
-                                <Text fontSize={'15px'} onClick={onSearch} color={'#AAAAAA'} bgColor={'#202020'} fontWeight={'500'}>전체</Text>
+                            <Box onClick={() => onSearch('전체')} cursor={'pointer'} p={'6px 12px 6px 12px'} borderRadius={10} sx={{
+                                'backgroundColor': search === '전체' ? '#4d8df5' : '#202020',
+                            }}>
+                                <Text fontSize={'15px'} onClick={onSearch} fontWeight={'500'} sx={{
+                                    'color': search === '전체' ? '#FFFFFF' : '#AAAAAA',
+                                }}>전체</Text>
                             </Box>
                             {fields && fields.map(f => 
-                            <Box onClick={() => onSearch(f.label)} cursor={'pointer'} p={'6px 12px 6px 12px'} bgColor={'#202020'} borderRadius={10} className={search === f.label ? 'search_active' : ''}>
-                                <Text id={f.label} fontSize={'15px'} color={'#AAAAAA'} bgColor={'#202020'} onClick={onSearch} fontWeight={'500'}>{f.label.split(" ")[0]}</Text>
+                            <Box onClick={() => onSearch(f.label)} cursor={'pointer'} p={'6px 12px 6px 12px'} borderRadius={10} sx={{
+                                'backgroundColor': search === f.label ? '#4d8df5' : '#202020',
+                            }}>
+                                <Text id={f.label} fontSize={'15px'} onClick={onSearch} fontWeight={'500'} sx={{
+                                    'color': search === f.label ? '#FFFFFF' : '#AAAAAA',
+                                }}>{f.label.split(" ")[0]}</Text>
                             </Box>)}
                         </HStack>
                     </Box>

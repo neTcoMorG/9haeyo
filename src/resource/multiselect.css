@@ -1,0 +1,24 @@
+.rs__control {
+    border: none;
+    background-color: #202020;
+}
+
+.rs__option:hover {
+  background-color: #303030;
+}
+
+.rs__menu .rs__menu-list {
+    border: none;
+    background-color: #202020;
+}
+
+.rs__option {
+    font-size: 14px;
+    background-color: #202020;
+    border: none;
+}
+
+.rs__indicator{
+    background-color: #202020;
+
+}

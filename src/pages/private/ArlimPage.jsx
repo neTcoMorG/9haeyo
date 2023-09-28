@@ -1,12 +1,12 @@
 import { 
     Text,
-    Box,
-    Center
+    Center,
+    VStack
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { API_SERVER } from "../../application";
-import AlrimCard from "../../components/ArlimCard";
+import AlrimCard from "../../components/ArlimCard"; 
 
 export default function ArlimPage () {
 
@@ -29,10 +29,10 @@ export default function ArlimPage () {
 
     return (
         <>
-            <Box p={'24px'} w={'100%'}>
+            <VStack p={'24px'} w={'100%'} spacing={3}>
                 {arlims && arlims.map(a =>
-                    <AlrimCard data={a} />)}
-            </Box>
+                    <AlrimCard data={a} arr={arlims} setter={setArlims} />)}
+            </VStack>
         </>
     )
 }

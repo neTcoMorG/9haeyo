@@ -1,18 +1,13 @@
 import { Box, 
     Button, Grid, HStack, Image, VStack, Text, Badge,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalBody,
-    ModalCloseButton,
-    useDisclosure, } from "@chakra-ui/react";
+} from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import ProfileCardSkill from "./ProfileCardSkill";
 
 export default function ProfileCard ({user, handler}) {
 
     const navigate = useNavigate()
-    
+
     return (
         <>
         <Box cursor={'pointer'} w={'100%'} zIndex={5}>

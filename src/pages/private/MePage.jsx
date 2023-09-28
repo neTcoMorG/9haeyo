@@ -15,16 +15,9 @@ import kakao from '../../resource/kakao.png'
 import discord from '../../resource/disord.png'
 import { useNavigate } from "react-router-dom"
 
-export default function MePage () {
+export default function MePage ({profile, setter}) {
 
     const navigate = useNavigate()
-
-    const [profile, setProfile] = useState()
-
-    useEffect(() => {
-        axios.get(API_SERVER + '/user', {headers: {Authorization: localStorage.getItem('9token')}})
-        .then(res => setProfile(res.data))
-    }, [])
 
     return (
         <>

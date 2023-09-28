@@ -10,6 +10,8 @@ import { useEffect, useState } from "react";
 import ArlimPage from "./ArlimPage";
 import MePage from "./MePage";
 import MeModifyPage from "./MeModifyPage";
+import axios from "axios";
+import { API_SERVER } from "../../application";
 
 export default function PrivateProfilePage () {
 
@@ -22,8 +24,12 @@ export default function PrivateProfilePage () {
         navigate(url)
     }
     
+    const [profile, setProfile] = useState()
+
     useEffect(() => {
         setClicked('알림')
+        axios.get(API_SERVER + '/user', {headers: {Authorization: localStorage.getItem('9token')}})
+        .then(res => setProfile(res.data))
     }, [])
 
     return (
@@ -47,8 +53,8 @@ export default function PrivateProfilePage () {
                     </VStack>
                     <Routes>
                         <Route path="/" element={<ArlimPage />} />
-                        <Route path="/profile" element={<MePage />} />
-                        <Route path="/modify" element={<MeModifyPage />} />
+                        <Route path="/profile" element={<MePage profile={profile} setter={setProfile} />} />
+                        <Route path="/modify" element={<MeModifyPage profile={profile} setter={setProfile}/>} />
                     </Routes>
                 </HStack>
             </Container>

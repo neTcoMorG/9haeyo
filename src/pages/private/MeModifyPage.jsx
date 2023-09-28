@@ -1,37 +1,39 @@
 
 import {
     Box, 
+    FormControl, 
+    FormLabel, 
     Input, 
     VStack
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { useFields } from '../../hooks/useCates'
 import { Select as MultiSelect } from "chakra-react-select";
+import '../../resource/multiselect.css'
 
-export default function MeModifyPage () {
+export default function MeModifyPage ({profile, setter}) {
     
     const fields = useFields()
-    const [profile, setProfile] = useState()
     const [field, setField] = useState()
-
-    useEffect(() => {
-        
-    }, [])
-
+    
     return (
         <>
-             <Box p={'24px'} w={'100%'} bgColor={'#202020'} borderRadius={10}>
-                <VStack width={'100%'} alignItems={'flex-start'} spacing={5}>
-                    <Input variant={'flushed'} placeholder='닉네임' w={'250px'} fontSize={'14px'} borderColor={'#CCCCCC'}/>
-                    <Box w={'250px'}>
-                        <MultiSelect 
-                            variant='flushed'
+             <Box p={'24px'} w={'100%'} borderRadius={10}>
+                <VStack width={'100%'} alignItems={'flex-start'} spacing={6}>
+                    <FormControl isRequired>
+                        <FormLabel fontSize={'14px'}>닉네임</FormLabel>
+                        <Input placeholder='닉네임' w={'300px'} fontSize={'14px'} bgColor={'#202020'} border={'none'} color={'white'}/>
+                    </FormControl>
+                    <FormControl w={'300px'} isRequired>
+                        <FormLabel fontSize={'14px'}>분야</FormLabel>
+                        <MultiSelect  
+                            classNamePrefix={'rs'}
                             placeholder='분야 선택'
                             value={field}
                             options={fields}
                             onChange={setField}
                         />
-                    </Box>
+                    </FormControl>
                 </VStack>
              </Box>
         </>

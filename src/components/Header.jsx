@@ -73,8 +73,8 @@ export default function Header () {
             <ModalContent bgColor={'#101010'}>
                 <ModalCloseButton  />
                 <ModalBody p={'16px 0 16px 0'}>
-                    <Center w={'100%'} h={'100%'} >
-                        <Button h={'100%'} bgColor={'#101010'} color={'white'} fontSize={'18px'} p={2} onClick={() => window.location.href = GITHUB_LOGIN_URL}>
+                    <Center w={'100%'} h={'100%'} p={'0 60px 0 60px'} >
+                        <Button h={'100%'} w={'100%'} bgColor={'#101010'} color={'white'} fontSize={'18px'} p={2} onClick={() => window.location.href = GITHUB_LOGIN_URL}>
                             <HStack alignItems={'center'}>
                                 <Avatar src={github} size={'sm'} />
                                 <Text>Github로 시작하기</Text>
@@ -84,9 +84,9 @@ export default function Header () {
                 </ModalBody>
             </ModalContent>
         </Modal>
-        <Box position={'sticky'} top={'0'} style={dynamicStyle} zIndex={5}>
+        <Box position={'sticky'} top={'0'} style={dynamicStyle} zIndex={10}>
             <Box w={'1200px'} m={'auto'} p={'0 32px 0 32px'} display={'flex'} justifyContent={'space-between'} alignItems={'center'} h={'65px'}>
-                <Box onClick={() => navigate('/')}>
+                <Box onClick={() => navClick(1, '/', false)}>
                     <Text fontSize={'2xl'} fontWeight={'bold'} cursor={'pointer'}>구해YO</Text>
                 </Box>
                 <HStack letterSpacing={'-1px'} fontSize={'15px'} fontWeight={'600'} pl={'90px'}>
