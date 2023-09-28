@@ -31,7 +31,7 @@ export default function Header () {
     const [isLogin, setIsLogin] = useState(false)
 
     const style = {
-        backgroundColor: 'black',
+        backgroundColor: '#101010',
         transitionDuration: "0.5s",
     }
 
@@ -87,7 +87,10 @@ export default function Header () {
         <Box position={'sticky'} top={'0'} style={dynamicStyle} zIndex={10}>
             <Box w={'1200px'} m={'auto'} p={'0 32px 0 32px'} display={'flex'} justifyContent={'space-between'} alignItems={'center'} h={'65px'}>
                 <Box onClick={() => navClick(1, '/', false)}>
-                    <Text fontSize={'2xl'} fontWeight={'bold'} cursor={'pointer'}>구해YO</Text>
+                    <HStack spacing={0}>
+                        <Text fontSize={'2xl'} fontWeight={'bold'} cursor={'pointer'}>Dev</Text>
+                        <Text fontSize={'2xl'} color={'#4d8df5'} fontWeight={'bold'} cursor={'pointer'}>Spot</Text>
+                    </HStack>
                 </Box>
                 <HStack letterSpacing={'-1px'} fontSize={'15px'} fontWeight={'600'} pl={'90px'}>
                     <Box p={'15px 20px 15px 20px'} cursor={'pointer'} onClick={() => navClick(0, '/private', true)}>

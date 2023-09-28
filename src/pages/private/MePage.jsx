@@ -25,7 +25,7 @@ export default function MePage ({profile, setter}) {
                 {profile &&
                 <>
                 <Box position={'absolute'} right={'38px'} cursor={'pointer'} zIndex={5} onClick={() => navigate('/private/modify')}>
-                    <Text fontSize={'14px'} letterSpacing={'-1px'} color={'#DDDDDD'}>프로필 수정</Text>
+                    <Text fontSize={'14px'} letterSpacing={'-1px'} color={'#4d8df5'}>프로필 수정</Text>
                 </Box>
                 <Box w={'100%'} pt={'10px'}>
                     <HStack pl={'10px'} spacing={7}>
@@ -55,15 +55,15 @@ export default function MePage ({profile, setter}) {
                             <HStack spacing={6} pt={5}>
                                 <HStack>
                                     <Avatar w={'32px'} h={'32px'} />
-                                    {profile.contract.phone ? <Text>휴대폰</Text> : <Text color={'gray'}>없음</Text> }
+                                    {profile.contract.phone ? <Text>{profile.contract.phone}</Text> : <Text color={'gray'}>없음</Text> }
                                 </HStack>
                                 <HStack>
                                     <Avatar w={'32px'} h={'32px'} src={kakao} />
-                                    {profile.contract.kakao ? <Text>카카오톡</Text> : <Text color={'gray'}>없음</Text> }
+                                    {profile.contract.kakao ? <Text>{profile.contract.kakao}</Text> : <Text color={'gray'}>없음</Text> }
                                 </HStack>
                                 <HStack>
                                     <Avatar w={'32px'} h={'32px'} src={discord} />
-                                    {profile.contract.discord ? <Text>디스코드</Text> : <Text color={'gray'}>없음</Text> }
+                                    {profile.contract.discord ? <Text>{profile.contract.discord}</Text> : <Text color={'gray'}>없음</Text> }
                                 </HStack>
                             </HStack>
                         </VStack>

@@ -1,9 +1,10 @@
 
-const MODE = "test"
+const MODE = "prod"
 
 let API_SERVER = ""
 let GITHUB_OAUTH_REDIRECT_IP = ""
 let GITHUB_LOGIN_URL = ""
+
 
 if (MODE === "test") {
     API_SERVER = "http://localhost:8080"

@@ -26,8 +26,11 @@ import axios from "axios"
 import { API_SERVER, GITHUB_LOGIN_URL } from "../application"
 import { useFields } from "../hooks/useCates"
 import github from '../resource/github.png'
+import { useNavigate } from "react-router-dom"
 
 export default function Main () {
+
+    const navigate = useNavigate()
 
     const toast = useToast()
     const loginModal   = useDisclosure()
@@ -95,6 +98,16 @@ export default function Main () {
         .then(res => {
             setPreviews(res.data.previews)
             setToggle(res.data.status)
+        })
+        .catch(err => {
+            const {code} = err.response.data
+            if (code === "MalformedException") {
+                toast({
+                    status: 'warning',
+                    title: '먼저 프로필 정보를 입력해주세요'
+                })
+                navigate('/private/modify')
+            }
         })
     }
 
@@ -183,7 +196,7 @@ export default function Main () {
             </Center>
             <Container maxW={'1200px'} p={'0 32px 0 32px'}>
                 <HStack spacing={10} alignItems={'flex-start'}> 
-                    <Box w={'250px'} position={'sticky'} top={'9%'}> 
+                    <Box w={'250px'} position={'sticky'} top={'15%'}> 
                         <Box borderBottom={'1px solid #202020'}>
                             <Text fontSize={'15px'} fontWeight={'bold'} pb={2} letterSpacing={'-1px'}>분야 선택</Text>
                         </Box>

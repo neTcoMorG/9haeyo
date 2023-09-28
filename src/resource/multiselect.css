@@ -1,24 +1,53 @@
-.rs__control {
-    border: none;
-    background-color: #202020;
+
+.react-select__control {
+    background-color: #202020 !important;
+    border: none !important;
 }
 
-.rs__option:hover {
-  background-color: #303030;
+.react-select__value-container {
+    background-color: #202020 !important;
+    border: none !important;
 }
 
-.rs__menu .rs__menu-list {
-    border: none;
-    background-color: #202020;
-}
-
-.rs__option {
-    font-size: 14px;
-    background-color: #202020;
+.react-select__indicators {
+    background-color: #202020 !important;
     border: none;
 }
 
-.rs__indicator{
-    background-color: #202020;
+.react-select__menu {
+    background-color: #202020 !important;
+}
 
+.react-select__menu-list {
+    background-color: #202020 !important;
+    border-radius: 10px !important;
+    border: none !important;
+
+}
+
+.react-select__option {
+    background-color: #202020 !important;
+    font-size: 14px !important;
+}
+
+.react-select__indicator {
+    background-color: #202020 !important;
+    border: none !important;
+}
+
+.react-select__indicator-separator {
+    display: none !important;
+}
+
+.react-select__placeholder {
+    color: gray !important;
+    font-size: 13px;
+}
+
+.react-select__multi-value {
+    background-color: #303030 !important;
+}
+
+.react-select__single-value {
+    font-size: 13px !important;
 }
