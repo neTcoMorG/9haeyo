@@ -105,7 +105,7 @@ export default function Header () {
                 </HStack>
                 <Box h={'40px'} borderRadius={10}>
                     <HStack w={'100%'} spacing={5}>
-                        <Input bgColor={'#202020'} border={'none'} borderRadius={10} letterSpacing={'-1px'} fontSize={'13px'} placeholder={'프로젝트 및 스터디 검색'} />
+                        <Input bgColor={'#202020'} border={'none'} borderRadius={10} letterSpacing={'-1px'} fontSize={'13px'} placeholder={'기능 준비중..'} />
                         {!isLogin && <Text cursor={'pointer'} fontSize={'15px'} w={'60px'} letterSpacing={'-1px'} onClick={() => window.location.href = GITHUB_LOGIN_URL}>로그인</Text>}
                     </HStack>
                 </Box>

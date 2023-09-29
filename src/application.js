@@ -1,5 +1,5 @@
 
-const MODE = "test"
+const MODE = "prod"
 
 let API_SERVER = ""
 let GITHUB_OAUTH_REDIRECT_IP = ""

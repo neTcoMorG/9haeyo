@@ -26,7 +26,7 @@ export default function MePage ({profile, setter}) {
                     <Text fontSize={'14px'} letterSpacing={'-1px'} color={'#4d8df5'}>프로필 수정</Text>
                 </Box>
                 <Box w={'100%'} pt={'10px'}>
-                    <HStack pl={'10px'} spacing={7} alignItems={'flex-start'}>
+                    <HStack pl={'10px'} spacing={10} alignItems={'flex-start'}>
                         <Box 
                             className="drop_drop_image" 
                             backgroundImage={profile.avatar_url}

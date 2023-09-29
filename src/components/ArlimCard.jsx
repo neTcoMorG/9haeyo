@@ -27,9 +27,17 @@ export default function AlrimCard ({data, arr, setter}) {
                     <CloseButton position={'absolute'} size={'sm'} onClick={onDeleteHanlder} /> 
                     {!data.read && <Box position={'absolute'}  top={3} left={3}  w={'8px'} h={'8px'} bgColor={'crimson'} borderRadius={'50%'}/>}
                     <Avatar size={'md'} src={data.avatar_url} />
-                    <VStack alignItems={'flex-start'} spacing={1}>
+                    <VStack alignItems={'flex-start'} spacing={1} pr={10}>
                         <Text fontWeight={'bold'} fontSize={'16px'}>{data.title}</Text>
-                        <Text letterSpacing={'-1px'} fontSize={'14px'} color={'#DDDDDD'}>{data.txt}</Text>
+                        <Text 
+                            style={{
+                                overflow:'hidden',
+                                display: "-webkit-box",
+                                WebkitLineClamp: 1,
+                                WebkitBoxOrient: 'vertical',
+                                textOverflow: 'ellipsis',
+                            }}
+                            letterSpacing={'-1px'} fontSize={'14px'} color={'#DDDDDD'}>{data.txt}</Text>
                     </VStack>
                 </HStack>
             </Box>}

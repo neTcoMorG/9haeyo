@@ -80,6 +80,15 @@ export default function Main () {
                 status: 'info'
             })
         })
+        .catch(err => {
+            const {code} = err.response.data
+            if (code==="MalformedException") {
+                toast({
+                    status: 'error',
+                    title:'300자 이내로 작성해주세요'
+                })
+            }
+        })
     }
 
     const sendRequest = (nickname, avatar_url) => {
@@ -179,7 +188,7 @@ export default function Main () {
                                     <Text fontWeight={'bold'}>{reqUser.nickname}</Text>
                                     <Text>님 같이해요</Text>
                                 </HStack>
-                                <Textarea borderColor={'#303030'} h={'280px'} placeholder="무엇을 함께 하고 싶으신가요?" value={req.message} onChange={changeRequestMessage} />
+                                <Textarea borderColor={'#303030'} h={'280px'} placeholder="무엇을 함께 하고 싶으신가요? (300자 이내)" value={req.message} onChange={changeRequestMessage} />
                                 <Button bgColor={'#4d8df5'} color={'white'} w={'100%'} onClick={requestPacket}>보내기</Button>
                             </VStack>
                         </>}
@@ -245,7 +254,8 @@ export default function Main () {
                         </Box>
                         <HStack wrap={'wrap'} h={'100%'} pt={3}>
                             <Box onClick={() => onSearch('전체')} cursor={'pointer'} p={'6px 12px 6px 12px'} borderRadius={10} sx={{
-                                'backgroundColor': search === '전체' ? '#4d8df5' : '#202020',
+                                'backgroundColor': search === '전체' ? '#4d8df540' : '#202020',
+                                'border': search === '전체' ? '2px solid #4d8df5' : 'none'
                             }}>
                                 <Text fontSize={'15px'} fontWeight={'500'} sx={{
                                     'color': search === '전체' ? '#FFFFFF' : '#AAAAAA',
@@ -253,7 +263,8 @@ export default function Main () {
                             </Box>
                             {fields && fields.map(f => 
                             <Box onClick={(e) => onSearch(f.label)} id={f.label} cursor={'pointer'} p={'6px 12px 6px 12px'} borderRadius={10} sx={{
-                                'backgroundColor': search === f.label ? '#4d8df5' : '#202020',
+                                'backgroundColor': search === f.label ? '#4d8df540' : '#202020',
+                                'border': search === f.label ? '2px solid #4d8df5' : 'none'
                             }}>
                                 <Text id={f.label} fontSize={'15px'} fontWeight={'500'} sx={{
                                     'color': search === f.label ? '#FFFFFF' : '#AAAAAA',

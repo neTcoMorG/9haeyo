@@ -14,7 +14,7 @@ import {
     Button,
     useToast,
 } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useFields, useSkills, useUserTypes } from '../../hooks/useCates'
 import { Select as MultiSelect } from "chakra-react-select";
 import '../../resource/multiselect.css'

@@ -12,6 +12,7 @@ import MePage from "./MePage";
 import MeModifyPage from "./MeModifyPage";
 import axios from "axios";
 import { API_SERVER } from "../../application";
+import RequestTogether from "./RequestTogether";
 
 export default function PrivateProfilePage () {
 
@@ -49,7 +50,7 @@ export default function PrivateProfilePage () {
                         </HStack>
                         <HStack borderBottom={'1px solid #202020'} w={'100%'} pb={2}
                            cursor={'pointer'}
-                           onClick={() => onClickNav('제안', '/private/profile')}>
+                           onClick={() => onClickNav('제안', '/private/request')}>
                             <Text fontSize={'16px'} className={isClicked === "제안" ? 'nav_active' : 'nav_deactive'}>받은 제안</Text>
                         </HStack>
                     </VStack>
@@ -58,7 +59,8 @@ export default function PrivateProfilePage () {
                         <>
                             <Route path="/" element={<ArlimPage />} />
                             <Route path="/profile" element={<MePage profile={profile} setter={setProfile} />} />
-                            <Route path="/modify" element={<MeModifyPage profile={profile} setter={setProfile}/>} />
+                            <Route path="/modify"  element={<MeModifyPage profile={profile} setter={setProfile}/>} />
+                            <Route path="/request" element={<RequestTogether />} />
                         </>
                         }
                     </Routes>

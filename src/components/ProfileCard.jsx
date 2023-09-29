@@ -38,10 +38,10 @@ export default function ProfileCard ({user, handler}) {
                     <Box w={'100%'}>
                         <Text fontSize={'14px'} color={'#BBBBBB'} fontWeight={400} w={'200px'} style={{
                             overflow:'hidden',
-                            textOverflow: 'ellipsis',
                             display: "-webkit-box",
                             WebkitLineClamp: 2,
-                            WebkitBoxOrient: 'vertical'
+                            WebkitBoxOrient: 'vertical',
+                            textOverflow: 'ellipsis',
                         }}>
                             {user.about}
                         </Text>
