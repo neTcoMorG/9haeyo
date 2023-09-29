@@ -67,6 +67,16 @@ export default function MeModifyPage ({profile, setter}) {
                     title: '프로필 정보가 변경되었어요'})
                 navigate('/private/profile')
             })
+            .catch(err => {
+                // 분야 미선택 임시 코드
+                const code = err.response.data
+                if (code === "NotFoundException") {
+                    toast({
+                        title: '분야를 다시 설정해주세요',
+                        status: 'error'
+                    })
+                }
+            })
         }
     }
 

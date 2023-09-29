@@ -18,13 +18,13 @@ export default function SubMissionPage () {
                 <Box display={'flex'} justifyContent={'flex-end'} mb={3}>
                     <Button h={'30px'} fontSize={'12px'} bgColor={'#DA5A63'} color={'white'} _hover={{
                         bgColor: 'crimson'
-                    }}>문의하기</Button>
+                    }}>로드맵 생성</Button>
                 </Box>
                 <HStack w={'100%'} spacing={4} alignItems={'flex-start'}>
                     <Box w={'100%'} borderRadius={10} border={'1px solid #303030'} pb={2}>
                         <VStack w={'100%'} alignItems={'flex-start'}>
                             <Box p={'16px 20px 6px 20px'} borderBottom={'1px solid #303030'} w={'100%'}>
-                                <Text fontSize={'13px'} color={'#D8B4FE'} letterSpacing={'-1px'}>문의사항</Text>
+                                <Text fontSize={'13px'} color={'#D8B4FE'} letterSpacing={'-1px'}>대기중</Text>
                             </Box>
                             <VStack p={'6px 8px 6px 8px'} w={'100%'} spacing={3}>
 

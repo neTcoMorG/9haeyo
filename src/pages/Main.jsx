@@ -45,12 +45,20 @@ export default function Main () {
 
     const fields = useFields()
     
-    const onSearch = (type) => {
-        if (type === '전체') {
+    const sendSearch = (field) => {
+        const query = field !== null ? API_SERVER + "/hub/users?field=" + field.toString() : API_SERVER + '/hub/users'
+        axios.get(query).then(res => {setPreviews(res.data.content)})
+    }
+
+    const onSearch = (field) => {
+        if (field === '전체') {
             setSearch('전체')
+            sendSearch(null)
             return
         }
-        setSearch(type)
+
+        setSearch(field)
+        sendSearch(field)
     }
 
     const changeRequestMessage = (e) => {
@@ -88,6 +96,14 @@ export default function Main () {
         reqModal.onOpen()
     }
 
+    const needProfileDone = () => {
+        toast({
+            status: 'warning',
+            title: '먼저 프로필 정보를 입력해주세요'
+        })
+        navigate('/private/modify')
+    }
+
     const networkSwitchToggle = () => {
         const token = localStorage.getItem('9token')
         if (token == null) {
@@ -96,24 +112,51 @@ export default function Main () {
         }
         axios.get(API_SERVER + '/hub/toggle', {headers: {Authorization: localStorage.getItem('9token')}})
         .then(res => {
+            if (res.data.status) {
+                toast({
+                    status: 'info',
+                    title: '프로필이 공개되었어요',
+                    isClosable: true,
+                })
+            }
+            else {
+                toast({
+                    status: 'warning',
+                    title: '프로필이 비공개되었어요',
+                    isClosable: true,
+                })
+            }
             setPreviews(res.data.previews)
             setToggle(res.data.status)
         })
         .catch(err => {
             const {code} = err.response.data
             if (code === "MalformedException") {
-                toast({
-                    status: 'warning',
-                    title: '먼저 프로필 정보를 입력해주세요'
-                })
-                navigate('/private/modify')
+                needProfileDone()
             }
         })
     }
 
+    const openSelfProfile = () => {
+        axios.get(API_SERVER + '/user', {headers: {
+            Authorization: localStorage.getItem('9token')
+        }})
+        .then(res => navigate('/public/' + res.data.nickname))
+        .catch((err) => {
+            const {code} = err.response.data
+            if (code === "MalformedException") {
+                needProfileDone()
+            }
+            if (code === "NotFoundException") {
+                loginModal.onOpen()
+            }
+        })
+    }
+
+
     useEffect(() => {
         setSearch('전체')
-        axios.get(API_SERVER + '/hub/users').then(res => {setPreviews(res.data.content);})
+        sendSearch(null)
         axios.get(API_SERVER + '/hub/status', {headers: {Authorization: localStorage.getItem('9token')}})
         .then(res => setToggle(res.data))
     }, [])
@@ -123,8 +166,7 @@ export default function Main () {
         <Modal onClose={reqModal.onClose} isOpen={reqModal.isOpen} isCentered >
             <ModalOverlay 
                 backdropFilter={'auto'}
-                backdropSaturate={'80%'}
-                backdropBlur={'5px'}
+                backdropBlur={'4px'}
             />
             <ModalContent bgColor={'#101010'}>
                 <ModalCloseButton  />
@@ -180,6 +222,7 @@ export default function Main () {
                             </HStack>
                         </Tooltip>
                         <Button 
+                            onClick={openSelfProfile}
                             fontWeight={500}
                             letterSpacing={'-1px'}
                             fontSize={'14px'}
@@ -204,24 +247,33 @@ export default function Main () {
                             <Box onClick={() => onSearch('전체')} cursor={'pointer'} p={'6px 12px 6px 12px'} borderRadius={10} sx={{
                                 'backgroundColor': search === '전체' ? '#4d8df5' : '#202020',
                             }}>
-                                <Text fontSize={'15px'} onClick={onSearch} fontWeight={'500'} sx={{
+                                <Text fontSize={'15px'} fontWeight={'500'} sx={{
                                     'color': search === '전체' ? '#FFFFFF' : '#AAAAAA',
                                 }}>전체</Text>
                             </Box>
                             {fields && fields.map(f => 
-                            <Box onClick={() => onSearch(f.label)} cursor={'pointer'} p={'6px 12px 6px 12px'} borderRadius={10} sx={{
+                            <Box onClick={(e) => onSearch(f.label)} id={f.label} cursor={'pointer'} p={'6px 12px 6px 12px'} borderRadius={10} sx={{
                                 'backgroundColor': search === f.label ? '#4d8df5' : '#202020',
                             }}>
-                                <Text id={f.label} fontSize={'15px'} onClick={onSearch} fontWeight={'500'} sx={{
+                                <Text id={f.label} fontSize={'15px'} fontWeight={'500'} sx={{
                                     'color': search === f.label ? '#FFFFFF' : '#AAAAAA',
                                 }}>{f.label.split(" ")[0]}</Text>
                             </Box>)}
                         </HStack>
                     </Box>
+                    {previews && previews.length > 0 ?
                     <Grid w={'100%'} templateColumns='repeat(4, 1fr)' gridRowGap={'42px'} gridColumnGap={4}>
-                        {previews && previews.map(pr =>
-                            <ProfileCard handler={sendRequest} user={pr} />)}
-                    </Grid>
+                    {previews && previews.map(pr =>
+                        <ProfileCard handler={sendRequest} user={pr} />)}
+                    </Grid> 
+                    : <>
+                        <Center w={'100%'} pt={'10%'}>
+                            <VStack spacing={1} h={'100%'}>
+                                <Text fontSize={'28px'} letterSpacing={'-1px'} fontWeight={'bold'}>검색 결과 없음</Text>
+                                <Text fontSize={'20px'} letterSpacing={'-1px'} color={'gray'}>해당 분야의 개발자는 아직 없어요</Text>
+                            </VStack>
+                        </Center>
+                    </>}
                 </HStack>
             </Container>
         </Box>

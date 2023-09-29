@@ -1,5 +1,12 @@
-import { Box, 
-    Button, Grid, HStack, Image, VStack, Text, Badge,
+import { 
+    Box, 
+    Button, 
+    Grid, 
+    HStack, 
+    Image, 
+    VStack, 
+    Text, 
+    Badge,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import ProfileCardSkill from "./ProfileCardSkill";
@@ -26,7 +33,7 @@ export default function ProfileCard ({user, handler}) {
                         <Text fontSize={'16px'} fontWeight={600} letterSpacing={'-1px'}>{user.field}</Text>
                         {user.user_type === "실무자" ? <Badge colorScheme="red" p={'0 3px 0 3px'} m={0}>{user.user_type}</Badge> : null}
                         {user.user_type === "취준생" ? <Badge colorScheme="green" p={'0 3px 0 3px'} m={0}>{user.user_type}</Badge> : null}
-                        {user.user_type === "꿈나무" ? <Badge p={'0 3px 0 3px'} m={0}>{user.user_type}</Badge> : null}
+                        {user.user_type === "학생" ? <Badge p={'0 3px 0 3px'} m={0}>{user.user_type}</Badge> : null}
                     </HStack>
                     <Box w={'100%'}>
                         <Text fontSize={'14px'} color={'#BBBBBB'} fontWeight={400} w={'200px'} style={{

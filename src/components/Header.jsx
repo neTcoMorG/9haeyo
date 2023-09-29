@@ -100,7 +100,7 @@ export default function Header () {
                         <Text className={ clicked === 1 ? 'nav_active' : 'nav_deactive'}>네트워크</Text>
                     </Box>
                     <Box p={'15px 20px 15px 20px'} cursor={'pointer'} onClick={() => navClick(2, '/mission', true)}>
-                        <Text className={ clicked === 2 ? 'nav_active' : 'nav_deactive'}>문의하기</Text>
+                        <Text className={ clicked === 2 ? 'nav_active' : 'nav_deactive'}>로드맵</Text>
                     </Box>
                 </HStack>
                 <Box h={'40px'} borderRadius={10}>

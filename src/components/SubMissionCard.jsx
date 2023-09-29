@@ -1,4 +1,4 @@
-import { Box, VStack, Text, Badge } from "@chakra-ui/react";
+import { VStack, Text, Badge } from "@chakra-ui/react";
 
 
 export default function SubMissionCard ({mission}) {

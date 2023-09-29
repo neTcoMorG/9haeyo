@@ -31,7 +31,7 @@ export default function PublicProfilePage () {
     const navigate = useNavigate()
 
     useEffect(() => {
-        axios.get(API_SERVER + '/hub/user/' + nickname).then(res => { setData(res.data); console.log(res.data) })
+        axios.get(API_SERVER + '/hub/user/' + nickname).then(res => { setData(res.data) })
         .catch(err => {
             alert('사용자의 프로필이 닫혀있어요')
             navigate(-1)
