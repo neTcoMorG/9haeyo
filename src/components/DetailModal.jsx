@@ -18,8 +18,6 @@ import discord  from '../resource/disord.png'
 
 export default function DetailModal ({onClose, isOpen, data}) {
 
-    console.log(data)
-
     return (
         <Modal isOpen={isOpen} onClose={onClose} isCentered>
             <ModalOverlay />

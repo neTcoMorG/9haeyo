@@ -15,20 +15,30 @@ import {
     FormControl,
     FormLabel,
     Input,
-    useDisclosure
+    useDisclosure,
+    useToast
 } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import SubMissionCard from "../../components/SubMissionCard"
 import axios from "axios"
 import { API_SERVER } from "../../application"
 
+
+import MDEditor, {commands} from "@uiw/react-md-editor"
+
+
 export default function SubMissionPage () {
 
     const createModal = useDisclosure()
 
+    const toast = useToast()
+
     const [wait, setWait]         = useState()
     const [progress, setProgress] = useState()
     const [done, setDone]         = useState()
+
+    const [title, setTitle]       = useState("")
+    const [txt, setTxt]           = useState("")
 
     useEffect(() => {
         axios.get(API_SERVER + '/mission?status=WAIT').then(res => setWait(res.data.content))
@@ -36,10 +46,47 @@ export default function SubMissionPage () {
         axios.get(API_SERVER + '/mission?status=DONE').then(res => setDone(res.data.content))
     }, [])
 
+    const onChangeTitle = (e) => [
+        setTitle(e.target.value)
+    ]
+
+    const clearFormData = () => {
+        setTitle('')
+        setTxt('')
+    }
+
+    const createRoadMap = () => {
+
+        if (title.length <= 0 || txt.length <= 0) {
+            toast({
+                title:'내용을 입력해주세요',
+                status: 'warning'
+            })
+            return
+        }
+
+        const packet = {
+            title,
+            txt
+        }
+        axios.post(API_SERVER + '/mission', JSON.stringify(packet), {headers: {
+            Authorization: localStorage.getItem('9token'),
+            'Content-Type': 'application/json'
+        }})
+        .then(res => {
+            setWait([res.data, ...wait])
+            toast({
+                title: '당신의 아이디어에 감사합니다',
+                status: 'info'
+            })
+            createModal.onClose()
+            clearFormData()
+        })
+    }
 
     return (
         <>
-            <Modal isOpen={createModal.isOpen} onClose={createModal.onClose} isCentered p={'16px'}>
+            <Modal closeOnOverlayClick={false} isOpen={createModal.isOpen} onClose={createModal.onClose} isCentered p={'16px'}>
                 <ModalOverlay 
                     backdropFilter={'auto'}
                     backdropBlur={'4px'}
@@ -47,12 +94,31 @@ export default function SubMissionPage () {
                 <ModalContent bgColor={'#101010'} w={'448px'} h={'528px'} p={'12px'}>
                     <ModalHeader fontSize={'18px'}>로드맵 생성</ModalHeader>
                     <ModalCloseButton  />
-                    <ModalBody p={'16px'}>
-                        <VStack>
-                            <FormControl>
+                    <ModalBody p={'16px'} w={'100%'} h={'100%'}>
+                        <VStack spacing={5}>
+                            <FormControl isRequired>
                                 <FormLabel fontSize={'13px'} color={'#A3A3A3'}>제목</FormLabel>
-                                <Input placeholder="로드맵 제목" h={'38px'} />
+                                <Input onChange={onChangeTitle} value={title} placeholder="로드맵 제목" h={'38px'} fontSize={'14px'} borderColor={'#202020'}/>
                             </FormControl>
+                            <FormControl isRequired h={'100%'}>
+                                <FormLabel fontSize={'13px'} color={'#A3A3A3'}>당신의 아이디어</FormLabel>
+                                <MDEditor 
+                                    value={txt}
+                                    onChange={setTxt}
+                                    w={'100%'}
+                                    height={260}
+                                    preview="edit"
+                                    commands={[
+                                        commands.title,
+                                        commands.bold
+                                    ]}
+                                />
+                            </FormControl>
+                            <Box display={'flex'} justifyContent={'flex-end'} mb={3} w={'100%'}>
+                                <Button h={'30px'} fontSize={'12px'} bgColor={'#DA5A63'} color={'white'} _hover={{
+                                    bgColor: 'crimson'
+                                }} onClick={createRoadMap}>로드맵 등록</Button>
+                            </Box>
                         </VStack>
                     </ModalBody>
                 </ModalContent>
@@ -70,7 +136,15 @@ export default function SubMissionPage () {
                                 <Text fontSize={'13px'} color={'#D8B4FE'} letterSpacing={'-1px'}>대기중</Text>
                             </Box>
                             <VStack p={'6px 8px 6px 8px'} w={'100%'} spacing={3}>
-
+                                {wait && wait.map(w => 
+                                    <SubMissionCard mission={{
+                                        title: w.title,
+                                        date: w.created,
+                                        type: '문의사항',
+                                        writer: w.writer,
+                                        status: w.status,
+                                        txt: w.message
+                                    }}/>)}
                             </VStack>
                         </VStack>
                     </Box>
@@ -80,13 +154,15 @@ export default function SubMissionPage () {
                                 <Text fontSize={'13px'} color={'#FACC15'} letterSpacing={'-1px'}>진행중</Text>
                             </Box>
                             <VStack p={'6px 8px 6px 8px'} w={'100%'} spacing={3}>
-                                <SubMissionCard 
-                                    mission={{
-                                        title: '사용자 문의사항 기능',
-                                        date: '2023. 09. 27',
-                                        type: '추가 기능'
-                                    }}
-                                />
+                                {progress && progress.map(p => 
+                                    <SubMissionCard mission={{
+                                        title: p.title,
+                                        date: p.created,
+                                        type: '문의사항',
+                                        writer: p.writer,
+                                        status: p.status,
+                                        txt: p.message,
+                                }}/>)}
                             </VStack>
                         </VStack>
                     </Box>
@@ -96,7 +172,15 @@ export default function SubMissionPage () {
                                 <Text fontSize={'13px'} color={'#4ADE80'} letterSpacing={'-1px'}>완료</Text>
                             </Box>
                             <VStack p={'6px 8px 6px 8px'} w={'100%'} spacing={3}>
-                                
+                                {done && done.map(d => 
+                                    <SubMissionCard mission={{
+                                        title: d.title,
+                                        date: d.created,
+                                        type: '문의사항',
+                                        writer: d.writer,
+                                        status: d.status,
+                                        txt: d.message
+                                }}/>)}
                             </VStack>
                         </VStack>
                     </Box>
