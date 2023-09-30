@@ -5,7 +5,6 @@ import MissionDetail from "./MissionDetail";
 export default function SubMissionCard ({mission}) {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
-    console.log(mission)
 
     return (
         <>
@@ -28,7 +27,8 @@ export default function SubMissionCard ({mission}) {
                     textOverflow: 'ellipsis',
                 }}>{mission.title}</Text>
                 <Text fontSize={'12px'} color={'#737373'}>{mission.date}</Text>
-                <Badge 
+                {mission.cate === "FR" ? 
+                 <Badge 
                     p={'2px 10px 2px 10px'}
                     mt={1} 
                     borderRadius={10} 
@@ -36,7 +36,16 @@ export default function SubMissionCard ({mission}) {
                     color={'#919191'}
                     fontSize={'6px'}
                     textAlign={'center'}
-                    border={'1px solid #3b3b3b'}>{mission.type}</Badge>
+                    border={'1px solid #3b3b3b'}>기능 추가</Badge>
+                :<Badge 
+                    p={'2px 10px 2px 10px'}
+                    mt={1} 
+                    borderRadius={10} 
+                    bgColor={'#292929'} 
+                    color={'#919191'}
+                    fontSize={'6px'}
+                    textAlign={'center'}
+                    border={'1px solid #3b3b3b'}>버그 수정</Badge>}
             </VStack>
         </>
         }

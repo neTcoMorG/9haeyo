@@ -20,7 +20,7 @@ export default function MissionDetail ({onClose, isOpen, data}) {
     return (
         <Modal isOpen={isOpen} onClose={onClose} isCentered>
             <ModalOverlay />
-            <ModalContent minW={'72rem'} h={'93%'} bgColor={'#292929'}>
+            <ModalContent minW={'72rem'} pb={'200px'} bgColor={'#262626'} borderRadius={15}>
                 <ModalHeader />
                 <ModalCloseButton />
                 <ModalBody p={'15px 32px 32px 32px'}>
@@ -33,7 +33,7 @@ export default function MissionDetail ({onClose, isOpen, data}) {
                                 <Box pt={5} w={'100%'}>
                                     <MDEditor.Markdown
                                         style={{
-                                            backgroundColor: '#292929',
+                                            backgroundColor: '#262626',
                                             fontSize: '15px',
                                             fontWeight: 'lighter'
                                         }}
@@ -55,6 +55,12 @@ export default function MissionDetail ({onClose, isOpen, data}) {
                                         {data.status === "WAIT"     ? <Text fontSize={'14px'} color={'#D8B4FE'}>대기중</Text> : null}
                                         {data.status === "PROGRESS" ? <Text fontSize={'14px'} color={'#FACC15'}>진행중</Text> : null}
                                         {data.status === "DONE"     ? <Text fontSize={'14px'} color={'#4ADE80'}>완료</Text> : null}
+                                    </HStack>    
+                                </HStack>
+                                <HStack justifyContent={'flex-start'} spacing={'40px'}>
+                                    <Text fontWeight={'bold'} w={'45px'} fontSize={'14px'} color={'#727272'}>분류</Text>
+                                    <HStack spacing={3}>
+                                        {data.cate === "FR" ? <Text color={'#737373'} fontSize={'14px'}>기능 추가</Text>:<Text color={'#737373'} fontSize={'14px'}>버그 수정</Text>}
                                     </HStack>    
                                 </HStack>
                                 <HStack justifyContent={'flex-start'} spacing={'40px'}>

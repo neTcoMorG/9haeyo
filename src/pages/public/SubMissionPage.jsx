@@ -16,16 +16,15 @@ import {
     FormLabel,
     Input,
     useDisclosure,
-    useToast
+    useToast,
+    Select
 } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import SubMissionCard from "../../components/SubMissionCard"
 import axios from "axios"
 import { API_SERVER } from "../../application"
 
-
 import MDEditor, {commands} from "@uiw/react-md-editor"
-
 
 export default function SubMissionPage () {
 
@@ -37,6 +36,8 @@ export default function SubMissionPage () {
     const [progress, setProgress] = useState()
     const [done, setDone]         = useState()
 
+    const [category, setCategory] = useState('FR')
+
     const [title, setTitle]       = useState("")
     const [txt, setTxt]           = useState("")
 
@@ -46,9 +47,13 @@ export default function SubMissionPage () {
         axios.get(API_SERVER + '/mission?status=DONE').then(res => setDone(res.data.content))
     }, [])
 
-    const onChangeTitle = (e) => [
+    const onChangeCategory = (val) => {
+        setCategory(val.target.value)
+    }
+
+    const onChangeTitle = (e) => {
         setTitle(e.target.value)
-    ]
+    }
 
     const clearFormData = () => {
         setTitle('')
@@ -67,8 +72,12 @@ export default function SubMissionPage () {
 
         const packet = {
             title,
-            txt
+            txt,
+            category
         }
+
+        console.log(packet);
+
         axios.post(API_SERVER + '/mission', JSON.stringify(packet), {headers: {
             Authorization: localStorage.getItem('9token'),
             'Content-Type': 'application/json'
@@ -91,14 +100,21 @@ export default function SubMissionPage () {
                     backdropFilter={'auto'}
                     backdropBlur={'4px'}
                 />
-                <ModalContent bgColor={'#101010'} w={'448px'} h={'528px'} p={'12px'}>
-                    <ModalHeader fontSize={'18px'}>로드맵 생성</ModalHeader>
+                <ModalContent bgColor={'#101010'} w={'448px'} h={'580px'} p={'12px'}>
+                    <ModalHeader fontSize={'18px'}>New Submission</ModalHeader>
                     <ModalCloseButton  />
                     <ModalBody p={'16px'} w={'100%'} h={'100%'}>
                         <VStack spacing={5}>
                             <FormControl isRequired>
                                 <FormLabel fontSize={'13px'} color={'#A3A3A3'}>제목</FormLabel>
-                                <Input onChange={onChangeTitle} value={title} placeholder="로드맵 제목" h={'38px'} fontSize={'14px'} borderColor={'#202020'}/>
+                                <Input onChange={onChangeTitle} value={title} placeholder="로드맵 제목" h={'36px'} fontSize={'14px'} borderColor={'#202020'}/>
+                            </FormControl>
+                            <FormControl isRequired>
+                                <FormLabel fontSize={'13px'} color={'#A3A3A3'}>로드맵 카테고리</FormLabel>
+                                <Select borderColor={'#202020'} h={'36px'} fontSize={'13px'} onChange={onChangeCategory}> 
+                                    <option value={'FR'}  style={{backgroundColor: '#202020'}} fontSize={'13px'} color={'#A3A3A3'}>기능 추가</option>
+                                    <option value={'BUG'} style={{backgroundColor: '#202020'}} fontSize={'13px'} color={'#A3A3A3'}>버그 수정</option>
+                                </Select>
                             </FormControl>
                             <FormControl isRequired h={'100%'}>
                                 <FormLabel fontSize={'13px'} color={'#A3A3A3'}>당신의 아이디어</FormLabel>
@@ -106,7 +122,7 @@ export default function SubMissionPage () {
                                     value={txt}
                                     onChange={setTxt}
                                     w={'100%'}
-                                    height={260}
+                                    height={230}
                                     preview="edit"
                                     commands={[
                                         commands.title,
@@ -140,10 +156,10 @@ export default function SubMissionPage () {
                                     <SubMissionCard mission={{
                                         title: w.title,
                                         date: w.created,
-                                        type: '문의사항',
                                         writer: w.writer,
                                         status: w.status,
-                                        txt: w.message
+                                        txt: w.message,
+                                        cate: w.category
                                     }}/>)}
                             </VStack>
                         </VStack>
@@ -158,10 +174,10 @@ export default function SubMissionPage () {
                                     <SubMissionCard mission={{
                                         title: p.title,
                                         date: p.created,
-                                        type: '문의사항',
                                         writer: p.writer,
                                         status: p.status,
                                         txt: p.message,
+                                        cate: p.category
                                 }}/>)}
                             </VStack>
                         </VStack>
@@ -176,10 +192,10 @@ export default function SubMissionPage () {
                                     <SubMissionCard mission={{
                                         title: d.title,
                                         date: d.created,
-                                        type: '문의사항',
                                         writer: d.writer,
                                         status: d.status,
-                                        txt: d.message
+                                        txt: d.message,
+                                        cate: d.category
                                 }}/>)}
                             </VStack>
                         </VStack>
