@@ -31,5 +31,4 @@ const usePostFetch = (url, errCallback) => {
     return [data, setData]
 }
 
-
 export {useGetFetch, usePostFetch}
