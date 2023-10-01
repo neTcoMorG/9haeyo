@@ -1,5 +1,6 @@
 
-import { Avatar, Box, Center, Container, HStack, Heading, VStack, Text, Badge, Button,
+import { 
+    Avatar, Box, Center, Container, HStack, Heading, VStack, Text, Badge, Button,
     Modal,
     ModalOverlay,
     ModalContent,
@@ -197,6 +198,14 @@ export default function PublicProfilePage () {
                             <Box borderBottom={'1px solid #606060'} pb={2} w={'100%'}>
                                 <Text fontSize={'17px'} fontWeight={'bold'}>반응({data.reactions.length})</Text>
                             </Box>
+                            <HStack spacing={2} wrap={'wrap'} pt={2} w={'100%'}>
+                                    {isReaction == true ?
+                                        <Button w={'100%'} onClick={cancel} h={'30px'} colorScheme={'green'} fontSize={'12px'}>반응 삭제하기</Button> 
+                                    :<>
+                                        <Button onClick={() => reaction(true)}  h={'30px'} w={'auto'} colorScheme={'blue'} fontSize={'12px'}>대단해요</Button>
+                                        <Button onClick={() => reaction(false)} h={'30px'} w={'auto'} colorScheme={'red'} fontSize={'12px'}>별로에요</Button>
+                                    </> }
+                            </HStack>
                             <VStack w={'100%'} pt={4} spacing={2} zIndex={1}>
                                 {data.reactions && data.reactions.map(r =>  
                                 <Box 
@@ -216,17 +225,6 @@ export default function PublicProfilePage () {
                                     </HStack>
                                 </Box>)}
                             </VStack>
-                            <Box w={'100%'} pt={5}>
-                                <Text fontSize={'18px'} fontWeight={'bold'}>반응하기</Text>
-                                <HStack spacing={2} wrap={'wrap'} pt={2} w={'100%'}>
-                                    {isReaction == true ?
-                                        <Button w={'100%'} onClick={cancel} h={'30px'} colorScheme={'green'} fontSize={'12px'}>반응 삭제하기</Button> 
-                                    :<>
-                                        <Button onClick={() => reaction(true)}  h={'30px'} w={'auto'} colorScheme={'blue'} fontSize={'12px'}>대단해요</Button>
-                                        <Button onClick={() => reaction(false)} h={'30px'} w={'auto'} colorScheme={'red'} fontSize={'12px'}>별로에요</Button>
-                                    </> }
-                                </HStack>
-                            </Box>
                         </Box>
                     </VStack>
                 </HStack>

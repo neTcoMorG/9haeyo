@@ -5,17 +5,9 @@ import {
     Box, 
     Button,
     Grid,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
     useDisclosure
 } from "@chakra-ui/react";
 import DetailModal from "./DetailModal";
-
 
 export default function ReuqestListCard ({data}) {
 
