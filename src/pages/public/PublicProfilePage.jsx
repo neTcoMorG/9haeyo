@@ -69,6 +69,16 @@ export default function PublicProfilePage () {
                 status: 'info'
             })
         })
+        .catch(err => {
+            console.log(err)
+            const { code } = err.response.data 
+            if (code === "DuplicateException") {
+                toast({
+                    title: '이미 요청했어요 :( 하루 뒤에 또 보내보세요!',
+                    status: 'warning'
+                })
+            }
+        })
     }
 
     const sendRequest = () => {

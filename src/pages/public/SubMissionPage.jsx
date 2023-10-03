@@ -24,6 +24,8 @@ import SubMissionCard from "../../components/SubMissionCard"
 import axios from "axios"
 import { API_SERVER } from "../../application"
 
+import "../../resource/editor.css"
+
 import MDEditor, {commands} from "@uiw/react-md-editor"
 
 export default function SubMissionPage () {

@@ -82,10 +82,17 @@ export default function Main () {
         })
         .catch(err => {
             const {code} = err.response.data
-            if (code==="MalformedException") {
+
+            if (code === "MalformedException") {
                 toast({
                     status: 'error',
                     title:'300자 이내로 작성해주세요'
+                })
+            }
+            if (code === "DuplicateException") {
+                toast({
+                    title: '이미 요청했어요 :( 하루 뒤에 또 보내보세요!',
+                    status: 'warning'
                 })
             }
         })

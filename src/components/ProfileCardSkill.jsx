@@ -12,7 +12,7 @@ export default function ProfileCardSkill ({skills}) {
                         {skills[idx]}
                     </Badge>)}
                     <Text color={'#4d8df5'} m={0} fontWeight={700} fontSize={'10px'}>
-                        +{skills.length - 4}
+                        + {skills.length - 3}
                     </Text>
                 </HStack>
             </Box>
